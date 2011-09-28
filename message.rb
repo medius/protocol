@@ -16,6 +16,7 @@ class Message
     msg2 = ""
     
     while symbol = characters.pop
+      # A lower case symbol is always the starting point of a message
       if LOWER_CASE.include?(symbol)
         if msg1.empty?
           msg1 = symbol
@@ -23,11 +24,13 @@ class Message
           msg2 = symbol
         else
           return false
-        end  
+        end 
+      # There has to be atleast one valid message received till now   
       elsif UPPER_SINGLE.include?(symbol)
         if msg1.empty? && msg2.empty?
           return false
         else
+          # A new "Z" will go to second message if it exists
           if msg2.empty?
             msg1 = symbol + msg1
           else
@@ -35,9 +38,11 @@ class Message
           end
         end
       else UPPER_MULTIPLE.include?(symbol)
+        # Two valid messages should be available
         if msg1.empty? || msg2.empty?
           return false
         else
+          # Make a single message out of them
           msg1 = symbol + msg1 + msg2
           msg2 = ""
         end
